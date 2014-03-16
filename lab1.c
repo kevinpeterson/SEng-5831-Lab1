@@ -1,6 +1,11 @@
 #define ECHO2LCD
 
 #include <pololu/orangutan.h>
+#include "scheduler.h"
+#include "led.h"
+#include "tasks.h"
+#include "menu.h"
+#include "scheduler.h"
 
 // System tasks
 //#include "menu.h"
@@ -22,7 +27,6 @@ volatile uint32_t G_msTicks = 0;
 // shared variables with ISRs, including 
 // release flags, task period, toggle counts
 
-
 /*
  * Green : Port D, pin 5.
  * Yellow: Port A, pin 0.
@@ -35,10 +39,10 @@ void initialize_io() {
 }
 
 
-void _blink_led(volatile uint8_t* port, char led){
+void _test_led(volatile uint8_t* port, char port_value){
 	int i = 0;
 	for(i = 0;i < 10;i++){
-		*port ^= _BV(led);
+		*port ^= port_value;
 		delay_ms(200);
 	}
 }
@@ -50,27 +54,16 @@ void system_check() {
 	delay_ms(2000);
 	clear();
 	print("Check Green LED");
-	_blink_led(&PORTD, 5);
+	_test_led(&PORT_GREEN, BIT_GREEN);
 	clear();
 	print("Check Yellow LED");
-	_blink_led(&PORTA, 0);
+	_test_led(&PORT_YELLOW, BIT_YELLOW);
 	clear();
 	print("Check Red LED");
-	_blink_led(&PORTA, 2);
+	_test_led(&PORT_RED, BIT_RED);
 	clear();
 }
 
-
-void set_up_pwm() {
-	PORTD |= _BV(5);
-
-	OCR1A = 255;
-	ICR1 = 1000;
-
-	TCCR1A |= _BV(WGM11);
-	TCCR1B |= _BV(WGM13) | _BV(WGM12) | _BV(CS10) | _BV(CS12);
-	TCCR1A |= _BV(COM1A1);
-}
 
 int main(void) {
 	// -------------------------------------------------------------
@@ -106,6 +99,7 @@ int main(void) {
 	// The menu allows the user to modify the period of each task.
 	//
 	// --------------------------------------------------------------
+	lcd_init_printf();
 
 	int i;
 
@@ -113,12 +107,14 @@ int main(void) {
 	char tempBuffer[32];
 	int length = 0;
 	
+	init_menu();
 	initialize_io();
 	// Turn all LEDs on for a second or two then turn off to confirm working properly
 	// Send a message to LCD to confirm proper start. ( interrupts might need to be on for this ?? )
 	// Send a message through serial comm to confirm working properly.
 	system_check();
 
+	initialize_tasks();
 	// Initialize All Tasks
 
 	clear();	// clear the LCD
@@ -126,27 +122,17 @@ int main(void) {
 	//enable interrupts
 	sei();
 
-
 	while (1) {
-/*
-		PORTD |= _BV(5);
-
-		delay_ms(1000);
-
-		PORTD &= ~_BV(5);
-
-		delay_ms(1000);
-		*/
 		/* BEGIN with a simple toggle using for-loops. No interrupt timers */
 
 		// --------- blink LED by using a busy-wait delay implemented with an empty for-loop
-/*
+		/*
 		LED_TOGGLE(RED);
 		G_redToggles++;
 		length = sprintf( tempBuffer, "R toggles %d\r\n", G_redToggles );
 		print_usb( tempBuffer, length );
 
- #ifdef ECHO2LCD
+#ifdef ECHO2LCD
 		lcd_goto_xy(0,0);
 		printf("R:%d ",G_redToggles);
 #endif
@@ -155,19 +141,15 @@ int main(void) {
 		for (i=0;i<100;i++) {
 			WAIT_10MS;
 		}
-*/	
+		*/
+
 		// ----------- COMMENT OUT above implementation of toggle and replace with this...
 		// ------------------- Have scheduler release tasks using user-specified period
-
-
-
-		// --------------- RED task
+		release_ready_tasks();
 		
 		// --------------- MENU task
-/*
 		serial_check();
 		check_for_new_bytes_received();
-*/
 					
 	} //end while loop
 } //end main

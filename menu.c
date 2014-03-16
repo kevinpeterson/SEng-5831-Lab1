@@ -84,7 +84,7 @@ void process_received_string(const char* buffer)
 		// change toggle period <color> LED
 		case 'T':
 		case 't':
-			// setPeriod( color, value );
+			setPeriod( color, value );
 			break; 
 			
 		// print counter for <color> LED 
@@ -158,10 +158,14 @@ void check_for_new_bytes_received()
 	// them into the menuBuffer
 	while(serial_get_received_bytes(USB_COMM) != receive_buffer_position)
 	{
+		print_usb(&receive_buffer[receive_buffer_position], 1);
+
 		// place in a buffer for processing
 		menuBuffer[received] = receive_buffer[receive_buffer_position];
 		++received;
 		
+		//print_character(receive_buffer[receive_buffer_position]);
+
 		// Increment receive_buffer_position, but wrap around when it gets to
 		// the end of the buffer. 
 		if ( receive_buffer_position == sizeof(receive_buffer) - 1 )
@@ -177,10 +181,12 @@ void check_for_new_bytes_received()
 	if (received) {
 		// if only 1 received, it was MOST LIKELY a carriage return. 
 		// Even if it was a single keystroke, it is not a menu command, so ignore it.
+		/*
 		if ( 1 == received ) {
 			received = 0;
 			return;
 		}
+		*/
 		// Process buffer: terminate string, process, reset index to beginning of array to receive another command
 		menuBuffer[received] = '\0';
 #ifdef ECHO2LCD
