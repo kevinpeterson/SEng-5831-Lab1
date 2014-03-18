@@ -19,6 +19,6 @@ void initialize_scheduler();
 
 void release_ready_tasks();
 
-void register_task(Task* task);
+void register_task(volatile Task* task);
 
 #endif /* SCHEDULER_H_ */

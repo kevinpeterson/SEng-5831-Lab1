@@ -1,11 +1,15 @@
+#include <pololu/orangutan.h>
+
 #include "menu.h"
 #include "led.h"
+#include "tasks.h"
 
 #include <stdio.h>
 #include <inttypes.h>
+#include <string.h>
 
 // extern GLOBALS
-volatile uint32_t G_redToggles = 0;
+uint32_t G_redToggles = 0;
 
 // local global data structures
 char receive_buffer[32];
@@ -25,7 +29,7 @@ void print_usb( char *buffer, int n ) {
 // This immediately readies the board for serial comm
 void init_menu() {
 	
-	char printBuffer[32];
+	//char printBuffer[32];
 	
 	// Set the baud rate to 9600 bits per second.  Each byte takes ten bit
 	// times, so you can get at most 960 bytes per second at this speed.
@@ -133,6 +137,9 @@ void process_received_string(const char* buffer)
 
 } //end menu()
 
+char menuBuffer[32];
+static int received = 0;
+
 //---------------------------------------------------------------------------------------
 // If there are received bytes to process, this function loops through the receive_buffer
 // accumulating new bytes (keystrokes) in another buffer for processing.
@@ -143,7 +150,7 @@ void check_for_new_bytes_received()
 	serial_get_received_bytes is an array index that marks where in the buffer the most current received character resides. 
 	receive_buffer_position is an array index that marks where in the buffer the most current PROCESSED character resides. 
 	Both of these are incremented % (size-of-buffer) to move through the buffer, and once the end is reached, to start back at the beginning.
-	This process and data structures are from the Pololu library. See examples/serial2/test.c and src/OrangutanSerial/*.*
+	This process and data structures are from the Pololu library. See examples/serial2/test.c and src/OrangutanSerial/
 	
 	A carriage return from your comm window initiates the transfer of your keystrokes.
 	All key strokes prior to the carriage return will be processed with a single call to this function (with multiple passes through this loop).
@@ -151,8 +158,7 @@ void check_for_new_bytes_received()
 	The menuBuffer is used to hold all keystrokes prior to the carriage return. The "received" variable, which indexes menuBuffer, is reset to 0
 	after each carriage return.
 	*/ 
-	char menuBuffer[32];
-	static int received = 0;
+
 	
 	// while there are unprocessed keystrokes in the receive_buffer, grab them and buffer
 	// them into the menuBuffer
@@ -177,31 +183,18 @@ void check_for_new_bytes_received()
 			receive_buffer_position++;
 		}
 	}
-	// If there were keystrokes processed, check if a menue command
-	if (received) {
-		// if only 1 received, it was MOST LIKELY a carriage return. 
-		// Even if it was a single keystroke, it is not a menu command, so ignore it.
-		/*
-		if ( 1 == received ) {
-			received = 0;
-			return;
-		}
-		*/
-		// Process buffer: terminate string, process, reset index to beginning of array to receive another command
-		menuBuffer[received] = '\0';
-#ifdef ECHO2LCD
-		lcd_goto_xy(0,1);			
-		print("RX: (");
-		print_long(received);
-		print_character(')');
-		for (int i=0; i<received; i++)
-		{
-			print_character(menuBuffer[i]);
-		}
-#endif
+
+	if(strstr(menuBuffer, "\r") != NULL){
+		clear();
 		process_received_string(menuBuffer);
+		memset(menuBuffer,0,strlen(menuBuffer));
 		received = 0;
+
 	}
+	//clear();
+	lcd_goto_xy(0,0);
+	print(menuBuffer);
+
 }
 	
 //-------------------------------------------------------------------------------------------

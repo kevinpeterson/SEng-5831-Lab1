@@ -41,9 +41,9 @@ void initialize_io() {
 
 void _test_led(volatile uint8_t* port, char port_value){
 	int i = 0;
-	for(i = 0;i < 10;i++){
+	for(i = 0;i < 5;i++){
 		*port ^= port_value;
-		delay_ms(200);
+		delay_ms(100);
 	}
 }
 
@@ -100,12 +100,6 @@ int main(void) {
 	//
 	// --------------------------------------------------------------
 	lcd_init_printf();
-
-	int i;
-
-	// Used to print to serial comm window
-	char tempBuffer[32];
-	int length = 0;
 	
 	init_menu();
 	initialize_io();

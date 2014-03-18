@@ -22,5 +22,7 @@ volatile uint32_t __ii;
 
 void initialize_tasks();
 
+void setPeriod(char task, int ms);
+
 #endif
 

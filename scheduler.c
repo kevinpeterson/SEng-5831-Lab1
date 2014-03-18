@@ -8,7 +8,7 @@
 #define MAX_TASKS 10
 #define NUM_TASKS 2
 
-Task* tasks[NUM_TASKS];
+volatile Task* tasks[NUM_TASKS];
 
 volatile INT32 counter = 0;
 
@@ -23,7 +23,7 @@ void initialize_scheduler() {
 void release_ready_tasks() {
 	int i;
 	for (i = 0; i < NUM_TASKS; i++) {
-		Task* task = tasks[i];
+		volatile Task* task = tasks[i];
 		// if a task has been marked as released, fire its function
 		if (task != NULL && task->released) {
 			task->interrupt_function();
@@ -32,7 +32,7 @@ void release_ready_tasks() {
 	}
 }
 
-void register_task(Task* task) {
+void register_task(volatile Task* task) {
 	uint8_t i;
 	for(i = 0;i < MAX_TASKS; i++){
 		if(tasks[i] == NULL){
@@ -50,7 +50,7 @@ ISR(TIMER3_COMPA_vect) {
 
 	int i;
 	for (i = 0; i < NUM_TASKS; i++) {
-		Task* task = tasks[i];
+		volatile Task* task = tasks[i];
 		// release a job at the start of its period
 		if (task->period && (counter % task->period == 0)) {
 			task->released = 1;

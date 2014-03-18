@@ -8,13 +8,12 @@
 
 
 // periods
-//volatile uint16_t G_redPeriod;
 volatile uint16_t G_greenPeriod;
 volatile uint16_t G_yellowPeriod;
 
 void red_led_toggle();
 
-Task red_led_task = { .period = 250, .interrupt_function =
+volatile Task red_led_task = { .period = 250, .interrupt_function =
 		&red_led_toggle, .released = 0, .name = "Red Button Task" };
 
 void _set_up_pwm() {
@@ -77,19 +76,13 @@ void red_led_toggle() {
 
 // You don't have to use the code below, but this functionality is needed.
 void setPeriod(char task, int ms) {
-		
-	if (~((ms%100)==0)) {
-		ms = ms - (ms%100);
-		printf("Converted to period: %d.\n",ms);
-	}
-	
 	// For each task, if ms is 0, turn it off, else turn it on and set appropriately
 	
 	if ( ( task == 'R' ) || ( task == 'A' ) ) {
 		if ( ms == 0 ){
 			
 		} else {
-			red_led_toggle(ms);
+			red_led_task.period = ms;
 		}
 	}
 	
@@ -97,7 +90,7 @@ void setPeriod(char task, int ms) {
 		if ( ms == 0 ) {
 			
 		} else {
-			G_yellowPeriod = ms;
+
 		}
 	}
 	
