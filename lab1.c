@@ -6,9 +6,9 @@
 #include "tasks.h"
 #include "menu.h"
 #include "scheduler.h"
-
-// System tasks
-//#include "menu.h"
+#include "serial.h"
+#include "logger.h"
+#include "yellow_led.h"
 
 //Gives us uintX_t (e.g. uint32_t - unsigned 32 bit int)
 //On the ATMega128 int is actually 16 bits, so it is better to use
@@ -32,7 +32,7 @@ volatile uint32_t G_msTicks = 0;
  * Yellow: Port A, pin 0.
  * Red: Port A, pin 2.
  */
-void initialize_io() {
+void init_io() {
 	DDRD |= _BV(5);
 	DDRA |= _BV(0);
 	DDRA |= _BV(2);
@@ -64,6 +64,10 @@ void system_check() {
 	clear();
 }
 
+void serial_lcd_log_callback(char c) {
+	char str[2] = {c,'\0'};
+	log_msg(str, DEBUG);
+}
 
 int main(void) {
 	// -------------------------------------------------------------
@@ -101,8 +105,11 @@ int main(void) {
 	// --------------------------------------------------------------
 	lcd_init_printf();
 	
+	init_serial();
 	init_menu();
-	initialize_io();
+	init_io();
+	register_incoming_callback(&serial_lcd_log_callback);
+
 	// Turn all LEDs on for a second or two then turn off to confirm working properly
 	// Send a message to LCD to confirm proper start. ( interrupts might need to be on for this ?? )
 	// Send a message through serial comm to confirm working properly.
@@ -110,6 +117,7 @@ int main(void) {
 
 	initialize_tasks();
 	// Initialize All Tasks
+	init_yellow_led();
 
 	clear();	// clear the LCD
 
@@ -140,11 +148,6 @@ int main(void) {
 		// ----------- COMMENT OUT above implementation of toggle and replace with this...
 		// ------------------- Have scheduler release tasks using user-specified period
 		release_ready_tasks();
-		
-		// --------------- MENU task
-		serial_check();
-		check_for_new_bytes_received();
-					
 	} //end while loop
 } //end main
 

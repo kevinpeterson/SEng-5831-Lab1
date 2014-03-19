@@ -16,7 +16,7 @@ PANDOC=pandoc --from markdown --to html --standalone
 AVRDUDE=avrdude
 
 TARGET=lab1
-OBJECT_FILES=$(TARGET).o menu.o tasks.o scheduler.o
+OBJECT_FILES=$(TARGET).o menu.o tasks.o scheduler.o serial.o logger.o yellow_led.o
 
 all: $(TARGET).hex
 

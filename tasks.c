@@ -1,6 +1,7 @@
 #include "tasks.h"
 #include "scheduler.h"
 #include "led.h"
+#include "yellow_led.h"
 
 // NOTE: MENU task is in separate file menu.c
 
@@ -90,7 +91,7 @@ void setPeriod(char task, int ms) {
 		if ( ms == 0 ) {
 			
 		} else {
-
+			set_yellow_led_period(ms);
 		}
 	}
 	

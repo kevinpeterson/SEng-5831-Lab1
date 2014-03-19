@@ -8,7 +8,7 @@
 #ifndef SCHEDULER_H_
 #define SCHEDULER_H_
 
-typedef struct Task {
+typedef struct task_t {
 	uint16_t period;
 	void (*interrupt_function)(void);
 	char released;
