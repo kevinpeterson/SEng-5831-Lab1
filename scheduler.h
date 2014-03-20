@@ -8,6 +8,8 @@
 #ifndef SCHEDULER_H_
 #define SCHEDULER_H_
 
+#include <inttypes.h>
+
 typedef struct task_t {
 	uint16_t period;
 	void (*interrupt_function)(void);

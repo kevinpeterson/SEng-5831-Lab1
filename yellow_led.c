@@ -20,7 +20,7 @@ void init_yellow_led() {
 }
 
 ISR(TIMER0_OVF_vect) {
-	if(_100_ms_counter >= (yellow_led_period / 100)){
+	if(_100_ms_counter * 100 >= yellow_led_period){
 		LED_TOGGLE(YELLOW);
 		_100_ms_counter = 0;
 	}

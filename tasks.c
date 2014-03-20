@@ -2,6 +2,7 @@
 #include "scheduler.h"
 #include "led.h"
 #include "yellow_led.h"
+#include "red_led.h"
 
 // NOTE: MENU task is in separate file menu.c
 
@@ -14,8 +15,6 @@ volatile uint16_t G_yellowPeriod;
 
 void red_led_toggle();
 
-volatile Task red_led_task = { .period = 250, .interrupt_function =
-		&red_led_toggle, .released = 0, .name = "Red Button Task" };
 
 void _set_up_pwm() {
 	PORTD |= _BV(5);
@@ -32,19 +31,12 @@ void initialize_tasks() {
 	_set_up_pwm();
 
 	initialize_scheduler();
-	register_task(&red_led_task);
 }
 //--------------------------- SCHEDULER ------------------------------//
 	// 1 ms Software Clock Using Timer/Counter 3.
 	// Uses flags to release red toggle and serial communication (i.e. menu task)
 
 
-// -------------------------  RED ------------------------------------//
-	// Scheduler releases with flag. Executes inside  cyclic executive.
-	// Keep count of the number of toggles.
-void red_led_toggle() {
-	LED_TOGGLE(RED);
-}
 
 //--------------------------- YELLOW ---------------------------------//
 	// 100 ms Softward Clock using 8-bit timer.
@@ -83,7 +75,7 @@ void setPeriod(char task, int ms) {
 		if ( ms == 0 ){
 			
 		} else {
-			red_led_task.period = ms;
+			set_red_led_period(ms);
 		}
 	}
 	

@@ -16,8 +16,8 @@ void initialize_scheduler() {
 	// timer interrupt
 	TIMSK3 = _BV(OCIE3A);
 	TCCR3A = _BV(COM3A1);
-	TCCR3B = _BV(CS32) | _BV(CS30) | _BV(WGM32);
-	OCR3A = 20;
+	TCCR3B = _BV(CS31) | _BV(WGM32);
+	OCR3A = 2500;
 }
 
 void release_ready_tasks() {
