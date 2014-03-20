@@ -1,6 +1,7 @@
 #include <pololu/orangutan.h>
 
 #include "logger.h"
+#include "serial.h"
 /*
  * logger.c
  *
@@ -10,8 +11,9 @@
 
 void log_msg(char* msg, LogLevel level) {
 	if(level >= LOG_LEVEL) {
-		clear();
-		print(msg);
+		//clear();
+		//print(msg);
+		//serial_to_send(msg, 30);
 	}
 }
 

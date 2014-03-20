@@ -10,6 +10,7 @@
 #include "logger.h"
 #include "yellow_led.h"
 #include "red_led.h"
+#include "green_led.h"
 
 //Gives us uintX_t (e.g. uint32_t - unsigned 32 bit int)
 //On the ATMega128 int is actually 16 bits, so it is better to use
@@ -120,6 +121,7 @@ int main(void) {
 	// Initialize All Tasks
 	init_yellow_led();
 	init_red_led();
+	init_green_led();
 
 	clear();	// clear the LCD
 

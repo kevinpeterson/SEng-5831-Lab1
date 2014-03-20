@@ -26,7 +26,12 @@ void init_red_led() {
 
 void set_red_led_period(uint16_t ms) {
 	red_led_task.period = ms;
+	recalculate_hyperperiod();
 }
 
+int get_red_toggles() {
+	//todo
+	return 0;
+}
 
 

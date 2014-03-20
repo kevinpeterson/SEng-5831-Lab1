@@ -21,6 +21,8 @@ void initialize_scheduler();
 
 void release_ready_tasks();
 
+void recalculate_hyperperiod();
+
 void register_task(volatile Task* task);
 
 #endif /* SCHEDULER_H_ */

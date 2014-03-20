@@ -12,4 +12,8 @@ void init_yellow_led();
 
 void set_yellow_led_period(uint16_t ms);
 
+int get_yellow_toggles();
+
+void clear_yellow_toggles();
+
 #endif /* YELLOW_LED_H_ */

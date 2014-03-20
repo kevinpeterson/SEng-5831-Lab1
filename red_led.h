@@ -12,4 +12,8 @@ void init_red_led();
 
 void set_red_led_period(uint16_t ms);
 
+int get_red_toggles();
+
+void clear_red_toggles();
+
 #endif /* RED_LED_H_ */

@@ -10,10 +10,11 @@
 #include <inttypes.h>
 #include <string.h>
 
-void _build_command_buffer(char c);
+#include "yellow_led.h"
+#include "red_led.h"
+#include "green_led.h"
 
-// extern GLOBALS
-uint32_t G_redToggles = 0;
+void _build_command_buffer(char c);
 
 // local global data structures
 char command_buffer[32];
@@ -42,13 +43,13 @@ void process_received_string(const char* buffer) {
 	int value;
 	int parsed = sscanf(buffer, "%c %c %d", &op_char, &color, &value);
 
-	if(parsed != 3) {
+	if(parsed < 2) {
 		log_msg("INVALID COMMAND!!", ERROR);
 		return;
 	}
 
 	sprintf(tempBuffer, "Got %c %c %d", op_char, color, value);
-	log_msg(tempBuffer, WARN);
+	log_msg(tempBuffer, DEBUG);
 	memset(tempBuffer, 0, strlen(tempBuffer));
 
 	length = sprintf( tempBuffer, "Op:%c C:%c V:%d\r\n", op_char, color, value );
@@ -80,14 +81,16 @@ void process_received_string(const char* buffer) {
 		case 'p':
 			switch(color) {
 				case 'R': 
-					length = sprintf( tempBuffer, "R toggles: %d\r\n", G_redToggles );
+					length = sprintf( tempBuffer, "R toggles: %d\r\n", get_red_toggles() );
 					serial_to_send( tempBuffer, length );
 					break;
 				case 'G': 
- 
+					length = sprintf( tempBuffer, "G toggles: %d\r\n", get_green_toggles() );
+					serial_to_send( tempBuffer, length );
 					break;
 				case 'Y': 
-
+					length = sprintf( tempBuffer, "Y toggles: %d\r\n", get_yellow_toggles() );
+					serial_to_send( tempBuffer, length );
 					break;
 				case 'A': 
 
