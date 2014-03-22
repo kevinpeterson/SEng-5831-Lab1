@@ -49,6 +49,26 @@ void _test_led(volatile uint8_t* port, char port_value){
 	}
 }
 
+void print_welcome_message() {
+	char* msg = "Kevin's Lab 1";
+	int8_t i = -strlen(msg);
+	for(;i < 16;i++){
+		clear();
+		char* m;
+		int x = i;
+		if(i < 0){
+			x = 0;
+			m = msg+abs(i);
+		} else {
+			m = msg;
+		}
+		lcd_goto_xy(x,0);
+		print(m);
+		lcd_goto_xy(1,1);
+		print("MSSE SEng 5831");
+		delay_ms(300);
+	}
+}
 
 void system_check() {
 	clear();
@@ -115,6 +135,7 @@ int main(void) {
 	// Turn all LEDs on for a second or two then turn off to confirm working properly
 	// Send a message to LCD to confirm proper start. ( interrupts might need to be on for this ?? )
 	// Send a message through serial comm to confirm working properly.
+	print_welcome_message();
 	system_check();
 
 	initialize_tasks();
