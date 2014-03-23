@@ -1,5 +1,13 @@
 #define ECHO2LCD
-//#define WELCOME_MSG
+#define WELCOME_MSG
+
+//#define BUSY_WAIT_LOOP
+//#define EXPERIMENT_1
+#define EXPERIMENT_2
+//#define EXPERIMENT_3
+//#define EXPERIMENT_4
+//#define EXPERIMENT_5
+
 
 #include <pololu/orangutan.h>
 #include "scheduler.h"
@@ -26,6 +34,8 @@
 // GLOBALS
 // tick count for scheduler, yellow task, green task
 volatile uint32_t G_msTicks = 0;
+
+void busy_wait_10ms();
 
 // shared variables with ISRs, including 
 // release flags, task period, toggle counts
@@ -128,11 +138,13 @@ int main(void) {
 	// The menu allows the user to modify the period of each task.
 	//
 	// --------------------------------------------------------------
+	init_io();
+
+#ifndef BUSY_WAIT_LOOP
 	lcd_init_printf();
 	
 	init_serial();
 	init_menu();
-	init_io();
 	register_incoming_callback(&serial_lcd_log_callback);
 
 	// Turn all LEDs on for a second or two then turn off to confirm working properly
@@ -142,42 +154,28 @@ int main(void) {
 	print_welcome_message();
 #endif
 	system_check();
-
 	initialize_tasks();
-	// Initialize All Tasks
 	init_yellow_led();
+#ifndef EXPERIMENT_1
 	init_red_led();
+#endif
 	init_green_led();
 
 	clear();	// clear the LCD
 
 	//enable interrupts
 	sei();
-
-	while (1) {
-		/* BEGIN with a simple toggle using for-loops. No interrupt timers */
-
-		// --------- blink LED by using a busy-wait delay implemented with an empty for-loop
-		/*
-		LED_TOGGLE(RED);
-		G_redToggles++;
-		length = sprintf( tempBuffer, "R toggles %d\r\n", G_redToggles );
-		print_usb( tempBuffer, length );
-
-#ifdef ECHO2LCD
-		lcd_goto_xy(0,0);
-		printf("R:%d ",G_redToggles);
 #endif
 
-		// create a for-loop to kill approximately 1 second
-		for (i=0;i<100;i++) {
-			WAIT_10MS;
-		}
-		*/
+	while (1) {
 
-		// ----------- COMMENT OUT above implementation of toggle and replace with this...
-		// ------------------- Have scheduler release tasks using user-specified period
+#if defined(BUSY_WAIT_LOOP) || defined(EXPERIMENT_1)
+		toggle_red_led_busy_wait();
+#endif
+
+#ifndef BUSY_WAIT_LOOP
 		release_ready_tasks();
+#endif
+
 	} //end while loop
 } //end main
-

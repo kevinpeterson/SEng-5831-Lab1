@@ -7,10 +7,15 @@
 #include "scheduler.h"
 #include "led.h"
 #include <inttypes.h>
+#include "tasks.h"
 
 volatile uint32_t red_toggles = 0;
 
 void red_led_toggle();
+
+void busy_wait_10ms() {
+	WAIT_10MS;
+}
 
 volatile Task red_led_task = { .period = 250, .interrupt_function =
 		&red_led_toggle, .released = 0, .name = "Red Button Task" };
@@ -40,4 +45,10 @@ void clear_red_toggles() {
 	red_toggles = 0;
 }
 
-
+void toggle_red_led_busy_wait() {
+	int i = 0;
+	for (i = 0;i < red_led_task.period / 10;i++) {
+		busy_wait_10ms();
+	}
+	red_led_toggle();
+}
