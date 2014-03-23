@@ -1,4 +1,4 @@
-'''
+```
 
 000002f6 <busy_wait_10ms>:
      2f6:	a0 e0       	ldi	r26, 0x00	; 0
@@ -37,7 +37,7 @@
      356:	e2 e0       	ldi	r30, 0x02	; 2
      358:	0c 94 76 11 	jmp	0x22ec	; 0x22ec <__epilogue_restores__+0x20>
 
-'''
+
 lds: 8 x 2 = 16
 adiw: 1 x 2 = 2
 adc: 2 x 1 = 2
@@ -49,23 +49,27 @@ cpc: 3 x 1 = 3
                 33
                
 20000000 / (33 * 100) = 6060
-
+```
 
 Experiment 1
 -------------
+```
 Menu: {TPZ} {RGYA} <int>: ta1000
 Menu: {TPZ} {RGYA} <int>: za
 Menu: {TPZ} {RGYA} <int>: pa
 R toggles: 59
 G toggles: 66
 Y toggles: 66
+```
 
 Experiment 2
 -------------
+```
 Menu: {TPZ} {RGYA} <int>: ta1000
 Menu: {TPZ} {RGYA} <int>: za
 Menu: {TPZ} {RGYA} <int>: pa
 R toggles: 60
 G toggles: 61
 Y toggles: 60
+```
                
