@@ -1,4 +1,5 @@
 #define ECHO2LCD
+//#define WELCOME_MSG
 
 #include <pololu/orangutan.h>
 #include "scheduler.h"
@@ -49,6 +50,7 @@ void _test_led(volatile uint8_t* port, char port_value){
 	}
 }
 
+#ifdef WELCOME_MSG
 void print_welcome_message() {
 	char* msg = "Kevin's Lab 1";
 	int8_t i = -strlen(msg);
@@ -69,6 +71,7 @@ void print_welcome_message() {
 		delay_ms(300);
 	}
 }
+#endif
 
 void system_check() {
 	clear();
@@ -135,7 +138,9 @@ int main(void) {
 	// Turn all LEDs on for a second or two then turn off to confirm working properly
 	// Send a message to LCD to confirm proper start. ( interrupts might need to be on for this ?? )
 	// Send a message through serial comm to confirm working properly.
+#ifdef WELCOME_MSG
 	print_welcome_message();
+#endif
 	system_check();
 
 	initialize_tasks();

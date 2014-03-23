@@ -52,9 +52,6 @@ void process_received_string(const char* buffer) {
 	log_msg(tempBuffer, DEBUG);
 	memset(tempBuffer, 0, strlen(tempBuffer));
 
-	length = sprintf( tempBuffer, "Op:%c C:%c V:%d\r\n", op_char, color, value );
-	serial_to_send( tempBuffer, length );
-	
 	// convert color to upper and check if valid
 	color -= 32*(color>='a' && color<='z');
 	switch (color) {
@@ -78,44 +75,47 @@ void process_received_string(const char* buffer) {
 			
 		// print counter for <color> LED 
 		case 'P':
-		case 'p':
+		case 'p': {
+			char br_ = 1;
 			switch(color) {
+				case 'A': br_ = 0;
 				case 'R': 
 					length = sprintf( tempBuffer, "R toggles: %d\r\n", get_red_toggles() );
 					serial_to_send( tempBuffer, length );
-					break;
+					if(br_) {break;};
 				case 'G': 
 					length = sprintf( tempBuffer, "G toggles: %d\r\n", get_green_toggles() );
 					serial_to_send( tempBuffer, length );
-					break;
+					if(br_) {break;};
 				case 'Y': 
 					length = sprintf( tempBuffer, "Y toggles: %d\r\n", get_yellow_toggles() );
 					serial_to_send( tempBuffer, length );
-					break;
-				case 'A': 
-
 					break;
 				default: 
 					serial_to_send("Default in p(color). How did I get here?\r\n", 42 );
 			}
 			break;
-
+		}
 		// zero counter for <color> LED 
 		case 'Z':
-		case 'z':
+		case 'z': {
+			char br_ = 1;
 			switch(color) {
+				case 'A': br_ = 0;
 				case 'R': 
-					break;
+					clear_red_toggles();
+					if(br_) {break;};
 				case 'G': 
-					break;
+					clear_green_toggles();
+					if(br_) {break;};
 				case 'Y': 
-					break;
-				case 'A': 
+					clear_yellow_toggles();
 					break;
 				default: 
 					serial_to_send("Default in z(color). How did I get here?\r\n", 42 );
 			}
 			break;
+		}
 		default:
 			serial_to_send( "Command does not compute.\r\n", 27 );
 		} // end switch(op_char) 

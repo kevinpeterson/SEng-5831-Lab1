@@ -8,6 +8,8 @@
 #include "led.h"
 #include <inttypes.h>
 
+volatile uint32_t red_toggles = 0;
+
 void red_led_toggle();
 
 volatile Task red_led_task = { .period = 250, .interrupt_function =
@@ -18,6 +20,7 @@ volatile Task red_led_task = { .period = 250, .interrupt_function =
 	// Keep count of the number of toggles.
 void red_led_toggle() {
 	LED_TOGGLE(RED);
+	red_toggles++;
 }
 
 void init_red_led() {
@@ -30,8 +33,11 @@ void set_red_led_period(uint16_t ms) {
 }
 
 int get_red_toggles() {
-	//todo
-	return 0;
+	return red_toggles;
+}
+
+void clear_red_toggles() {
+	red_toggles = 0;
 }
 
 

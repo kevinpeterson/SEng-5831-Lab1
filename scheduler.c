@@ -42,9 +42,9 @@ uint32_t lcm(uint32_t x, uint32_t y) {
 
 void initialize_scheduler() {
 	// timer interrupt
-	TCCR3A = _BV(COM3A1);
-	TCCR3B = _BV(CS31) | _BV(WGM32);
-	OCR3A = 2500;
+	TCCR0A = _BV(WGM01);
+	TCCR0B = _BV(CS02);
+	OCR0A = 78;
 }
 
 void release_ready_tasks() {
@@ -85,14 +85,14 @@ void register_task(volatile Task* task) {
 	}
 	_set_hyperperiod();
 
-	if(! (TIMSK3 & _BV(OCIE3A))){
-		TIMSK3 = _BV(OCIE3A);
+	if(! (TIMSK0 & _BV(OCIE0A))){
+		TIMSK0 = _BV(OCIE0A);
 	}
 }
 
 
 // assume a 1000 tick hyperperiod -- release tasks (jobs) as necessary
-ISR(TIMER3_COMPA_vect) {
+ISR(TIMER0_COMPA_vect) {
 	if (counter == hyperperiod) {
 		counter = 0;
 	}

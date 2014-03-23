@@ -28,7 +28,25 @@
 #define ONE_SEC_ICR1 19531
 #define CALC_PERIOD(ms) (uint16_t)(((float) 19.531)  * ms)
 
+volatile uint32_t green_toggles = 0;
+
+void _turn_on_toggle() {
+	TCCR1A |= _BV(COM1A0);
+	TIMSK1 |= _BV(OCIE1A);
+}
+
+void _turn_off_toggle() {
+	TCCR1A &= ~_BV(COM1A0);
+	TIMSK1 &= ~_BV(OCIE1A);
+}
+
 void set_green_led_period(uint16_t ms) {
+	if(ms == 0) {
+		_turn_off_toggle();
+		return;
+	} else if(! (TIMSK1 &_BV(OCIE1A))) {
+		_turn_on_toggle();
+	}
 	OCR1A = CALC_PERIOD(ms);
 }
 
@@ -39,7 +57,7 @@ void _set_up_pwm() {
 
 	TCCR1A |= _BV(WGM11) | _BV(WGM10);
 	TCCR1B |= _BV(WGM13) | _BV(WGM12) | _BV(CS10) | _BV(CS12);
-	TCCR1A |= _BV(COM1A0);// | _BV(COM1B1);
+	_turn_on_toggle();
 }
 
 void init_green_led() {
@@ -47,7 +65,14 @@ void init_green_led() {
 }
 
 int get_green_toggles() {
-	//todo
-	return 0;
+	return green_toggles;
+}
+
+void clear_green_toggles() {
+	green_toggles = 0;
+}
+
+ISR(TIMER1_COMPA_vect) {
+	green_toggles++;
 }
 
