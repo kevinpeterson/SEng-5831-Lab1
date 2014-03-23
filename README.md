@@ -51,7 +51,7 @@ cpc: 3 x 1 = 3
 20000000 / (33 * 100) = 6060
 
 
-Experiement 1
+Experiment 1
 -------------
 Menu: {TPZ} {RGYA} <int>: ta1000
 Menu: {TPZ} {RGYA} <int>: za
@@ -60,7 +60,7 @@ R toggles: 59
 G toggles: 66
 Y toggles: 66
 
-Experiement 2
+Experiment 2
 -------------
 Menu: {TPZ} {RGYA} <int>: ta1000
 Menu: {TPZ} {RGYA} <int>: za
