@@ -6,6 +6,8 @@
  */
 #include <avr/interrupt.h>
 #include <inttypes.h> //gives us uintX_t
+#include <util/delay.h>
+#include "lab1.h"
 
 //--------------------------- GREEN ----------------------------------//
 
@@ -73,6 +75,18 @@ void clear_green_toggles() {
 }
 
 ISR(TIMER1_COMPA_vect) {
+#ifdef EXPERIMENT_6_1
+	sei();
+#endif
+#ifdef EXPERIMENT_3_1
+	delay_ms(90);
+#endif
+#ifdef EXPERIMENT_4_1
+	delay_ms(110);
+#endif
+#if defined(EXPERIMENT_5_1) || defined(EXPERIMENT_6_1)
+	delay_ms(510);
+#endif
 	green_toggles++;
 }
 

@@ -52,7 +52,7 @@ cpc: 3 x 1 = 3
 ```
 
 Experiment 1
--------------
+------------
 ```
 Menu: {TPZ} {RGYA} <int>: ta1000
 Menu: {TPZ} {RGYA} <int>: za
@@ -63,7 +63,7 @@ Y toggles: 66
 ```
 
 Experiment 2
--------------
+------------
 ```
 Menu: {TPZ} {RGYA} <int>: ta1000
 Menu: {TPZ} {RGYA} <int>: za
@@ -72,4 +72,9 @@ R toggles: 60
 G toggles: 61
 Y toggles: 60
 ```
-               
+ 
+Experiment 3
+------------
+```              
+```
+

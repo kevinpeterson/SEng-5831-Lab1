@@ -5,7 +5,9 @@
  *      Author: root
  */
 #include <avr/interrupt.h>
+#include <util/delay.h>
 #include "led.h"
+#include "lab1.h"
 #include <pololu/orangutan.h>
 #include <math.h>
 #include <stdio.h>
@@ -32,6 +34,18 @@ void init_yellow_led() {
 }
 
 ISR(TIMER3_COMPA_vect) {
+#ifdef EXPERIMENT_6_2
+	sei();
+#endif
+#ifdef EXPERIMENT_3_2
+	delay_ms(90);
+#endif
+#ifdef EXPERIMENT_4_2
+	delay_ms(110);
+#endif
+#if defined(EXPERIMENT_5_2) || defined(EXPERIMENT_6_2)
+	delay_ms(510);
+#endif
 	if(yellow_interrupt_counter == yellow_interrupt) {
 		LED_TOGGLE(YELLOW);
 		yellow_toggles++;

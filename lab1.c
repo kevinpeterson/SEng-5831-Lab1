@@ -1,15 +1,8 @@
 #define ECHO2LCD
 #define WELCOME_MSG
 
-//#define BUSY_WAIT_LOOP
-//#define EXPERIMENT_1
-#define EXPERIMENT_2
-//#define EXPERIMENT_3
-//#define EXPERIMENT_4
-//#define EXPERIMENT_5
-
-
 #include <pololu/orangutan.h>
+#include "lab1.h"
 #include "scheduler.h"
 #include "led.h"
 #include "tasks.h"
