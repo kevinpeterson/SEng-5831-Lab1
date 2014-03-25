@@ -1,10 +1,6 @@
 /*
- * yellow_led.h
- *
- *  Created on: Mar 18, 2014
- *      Author: root
+ * Controller for the Red LED driven by a cyclic executor released task.
  */
-
 #ifndef RED_LED_H_
 #define RED_LED_H_
 

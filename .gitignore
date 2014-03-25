@@ -5,6 +5,8 @@
 .settings/
 .project
 
+*.tar.gz
+
 *.d
 *.eep
 *.lss

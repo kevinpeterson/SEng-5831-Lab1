@@ -1,8 +1,5 @@
 /*
- * green_led.c
- *
- *  Created on: Mar 19, 2014
- *      Author: root
+ * Controller for the Green LED driven by hardware PWM
  */
 #include <avr/interrupt.h>
 #include <inttypes.h> //gives us uintX_t
@@ -11,11 +8,11 @@
 
 //--------------------------- GREEN ----------------------------------//
 
-	// Toggle with PWM signal on OCR1A. The period of the PWM IS the period of the toggle.
-	// Toggle period is limited by the range of the counter. Set prescaler and counter to maximize range.
-	// Use the corresponding interrupt to keep count of toggles.
-	//
-	// Don't forget to stop counting toggles when green turned off.
+// Toggle with PWM signal on OCR1A. The period of the PWM IS the period of the toggle.
+// Toggle period is limited by the range of the counter. Set prescaler and counter to maximize range.
+// Use the corresponding interrupt to keep count of toggles.
+//
+// Don't forget to stop counting toggles when green turned off.
 
 
 // When setting up timers or PWM signals, remember...

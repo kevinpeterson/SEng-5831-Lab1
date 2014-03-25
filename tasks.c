@@ -12,11 +12,6 @@
 void initialize_tasks() {
 	initialize_scheduler();
 }
-//--------------------------- SCHEDULER ------------------------------//
-	// 1 ms Software Clock Using Timer/Counter 3.
-	// Uses flags to release red toggle and serial communication (i.e. menu task)
-
-
 
 // You don't have to use the code below, but this functionality is needed.
 void setPeriod(char task, int ms) {

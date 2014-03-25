@@ -1,8 +1,5 @@
 /*
- * red_led.c
- *
- *  Created on: Mar 19, 2014
- *      Author: root
+ * Controller for the Red LED driven by a cyclic executor released task.
  */
 #include "scheduler.h"
 #include "led.h"

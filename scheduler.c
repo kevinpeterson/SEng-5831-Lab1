@@ -1,9 +1,10 @@
+/*
+ * A simple non-preemptive interrupt-driven scheduler.
+ */
 #include <pololu/orangutan.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdlib.h>
-#include <avr/delay.h>
-
 #include <stdio.h>
 #include "scheduler.h"
 #include "logger.h"

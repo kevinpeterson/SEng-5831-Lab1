@@ -1,15 +1,16 @@
+/**
+ * A serial-driven menu input system responsible for controlling various
+ * aspects of the LEDs.
+ */
 #include <pololu/orangutan.h>
-
+#include <stdio.h>
+#include <inttypes.h>
+#include <string.h>
 #include "menu.h"
 #include "led.h"
 #include "tasks.h"
 #include "serial.h"
 #include "logger.h"
-
-#include <stdio.h>
-#include <inttypes.h>
-#include <string.h>
-
 #include "yellow_led.h"
 #include "red_led.h"
 #include "green_led.h"

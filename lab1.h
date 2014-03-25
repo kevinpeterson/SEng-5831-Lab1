@@ -1,10 +1,11 @@
 /*
- * lab1.h
+ * A header file to control which Lab Experiment is run.
  *
- *  Created on: Mar 23, 2014
- *      Author: root
+ * Uncomment one (and only one) to run to run an experiment.
+ *
+ * Leave all commented to skip all experiments (you will still have full
+ * access to the menu system and full LED control).
  */
-
 #ifndef LAB1_H_
 #define LAB1_H_
 
@@ -18,6 +19,6 @@
 //#define EXPERIMENT_5_1
 //#define EXPERIMENT_5_2
 //#define EXPERIMENT_6_1
-#define EXPERIMENT_6_2
+///#define EXPERIMENT_6_2
 
 #endif /* LAB1_H_ */

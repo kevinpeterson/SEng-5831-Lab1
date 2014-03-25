@@ -1,8 +1,5 @@
 /*
- * yellow_led.c
- *
- *  Created on: Mar 18, 2014
- *      Author: root
+ * Controller for the Yellow LED driven directly by a timer ISR.
  */
 #include <avr/interrupt.h>
 #include <util/delay.h>

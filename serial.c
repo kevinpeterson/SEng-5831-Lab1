@@ -1,8 +1,5 @@
-/*
- * serial.c
- *
- *  Created on: Mar 18, 2014
- *      Author: root
+/**
+ * A basic serial communications interface.
  */
 #include <pololu/orangutan.h>
 #include <string.h>

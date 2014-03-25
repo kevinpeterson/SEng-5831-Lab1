@@ -1,3 +1,6 @@
+/**
+ * Helper functions for LED operations.
+ */
 #ifndef __LEDs_H
 #define __LEDs_H
 

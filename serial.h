@@ -1,10 +1,6 @@
-/*
- * serial.h
- *
- *  Created on: Mar 18, 2014
- *      Author: root
+/**
+ * A basic serial communications interface.
  */
-
 #ifndef SERIAL_H_
 #define SERIAL_H_
 

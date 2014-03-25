@@ -1,10 +1,6 @@
 /*
- * green_led.h
- *
- *  Created on: Mar 19, 2014
- *      Author: root
+ * Controller for the Green LED driven by hardware PWM
  */
-
 #ifndef GREEN_LED_H_
 #define GREEN_LED_H_
 

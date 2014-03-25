@@ -1,10 +1,6 @@
-/*
- * logger.h
- *
- *  Created on: Mar 18, 2014
- *      Author: root
+/**
+ * Simple logging infrastructure to capture system events and status.
  */
-
 #ifndef LOGGER_H_
 #define LOGGER_H_
 

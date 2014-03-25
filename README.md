@@ -1,5 +1,7 @@
-```
+Timer Experiement Lab Results and Notes
+=======================================
 
+```
 000002f6 <busy_wait_10ms>:
      2f6:	a0 e0       	ldi	r26, 0x00	; 0
      2f8:	b0 e0       	ldi	r27, 0x00	; 0
@@ -110,7 +112,7 @@ R toggles ~1*
 G toggles ~120*
 Y toggles ~110*
 ```
-* - menu inoperable, toggles manually counted
+\* menu inoperable, toggles manually counted
 
 Experiment 5
 ------------
@@ -125,7 +127,7 @@ R toggles 0*
 G toggles ~120*
 Y toggles 24*
 ```
-* - menu inoperable, toggles manually counted
+\* menu inoperable, toggles manually counted
 
 Experiment 6
 ------------
@@ -140,4 +142,4 @@ R toggles 0*
 G toggles ~120*
 Y toggles 0*
 ```
-* - menu inoperable, toggles manually counted
+\* menu inoperable, toggles manually counted

@@ -1,3 +1,6 @@
+/**
+ * MSSE SEng 5831 Lab1 main file.
+ */
 #define ECHO2LCD
 #define WELCOME_MSG
 
@@ -23,15 +26,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-// GLOBALS
-// tick count for scheduler, yellow task, green task
-volatile uint32_t G_msTicks = 0;
-
-void busy_wait_10ms();
-
-// shared variables with ISRs, including 
-// release flags, task period, toggle counts
 
 /*
  * Green : Port D, pin 5.
@@ -154,7 +148,8 @@ int main(void) {
 #endif
 	init_green_led();
 
-	clear();	// clear the LCD
+	// clear the LCD
+	clear();
 
 #if defined(EXPERIMENT_4_1) || defined(EXPERIMENT_4_2) || \
 	defined(EXPERIMENT_5_1) || defined(EXPERIMENT_5_2) || \

@@ -1,10 +1,6 @@
 /*
- * scheduler.h
- *
- *  Created on: Mar 14, 2014
- *      Author: kevin
+ * A simple non-preemptive interrupt-driven scheduler.
  */
-
 #ifndef SCHEDULER_H_
 #define SCHEDULER_H_
 
