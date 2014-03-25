@@ -156,6 +156,18 @@ int main(void) {
 
 	clear();	// clear the LCD
 
+#if defined(EXPERIMENT_4_1) || defined(EXPERIMENT_4_2) || \
+	defined(EXPERIMENT_5_1) || defined(EXPERIMENT_5_2) || \
+	defined(EXPERIMENT_6_1) || defined(EXPERIMENT_6_2)
+	set_green_led_period(500);
+	set_yellow_led_period(500);
+	set_red_led_period(500);
+
+	clear_green_toggles();
+	clear_yellow_toggles();
+	clear_red_toggles();
+#endif
+
 	//enable interrupts
 	sei();
 #endif

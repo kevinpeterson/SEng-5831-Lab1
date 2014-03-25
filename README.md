@@ -76,5 +76,68 @@ Y toggles: 60
 Experiment 3
 ------------
 ```              
+Menu: {TPZ} {RGYA} <int>: ta500
+Menu: {TPZ} {RGYA} <int>: za
+Menu: {TPZ} {RGYA} <int>: pa
+R toggles: 97
+G toggles: 120
+Y toggles: 119
 ```
 
+```
+Menu: {TPZ} {RGYA} <int>: ta500
+Menu: {TPZ} {RGYA} <int>: za
+Menu: {TPZ} {RGYA} <int>: pa
+R toggles: 13
+G toggles: 120
+Y toggles: 120
+```
+
+ 
+Experiment 4
+------------
+```     
+Menu: {TPZ} {RGYA} <int>: ta500
+Menu: {TPZ} {RGYA} <int>: za
+Menu: {TPZ} {RGYA} <int>: pa
+R toggles: 93
+G toggles: 120
+Y toggles: 120
+```
+
+```
+R toggles ~1*
+G toggles ~120*
+Y toggles ~110*
+```
+* - menu inoperable, toggles manually counted
+
+Experiment 5
+------------
+```
+R toggles 0*
+G toggles ~120*
+Y toggles 0*
+```
+
+```
+R toggles 0*
+G toggles ~120*
+Y toggles 24*
+```
+* - menu inoperable, toggles manually counted
+
+Experiment 6
+------------
+```
+R toggles 0*
+G toggles ~120*
+Y toggles ~120*
+```
+
+```
+R toggles 0*
+G toggles ~120*
+Y toggles 0*
+```
+* - menu inoperable, toggles manually counted

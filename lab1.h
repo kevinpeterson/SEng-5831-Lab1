@@ -18,6 +18,6 @@
 //#define EXPERIMENT_5_1
 //#define EXPERIMENT_5_2
 //#define EXPERIMENT_6_1
-//#define EXPERIMENT_6_2
+#define EXPERIMENT_6_2
 
 #endif /* LAB1_H_ */
