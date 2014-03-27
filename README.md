@@ -1,4 +1,4 @@
-Timer Experiement Lab Results and Notes
+Timer Experiement Lab Notes
 =======================================
 
 ```
@@ -57,6 +57,11 @@ Experiment 1
 ------------
 Use your original version of toggling the red LED that uses for-loops. Toggle all 3 at 1Hz. (Do not type in any menu options while you are toggling until the 1 minute is up). How good was your WCET analysis of the for loop? If it is very far off, adjust it. Why did I not want you to use the menu while running the experiment? 
 
+####Results
+My WCET was a little bit overestimated. 6060 loops took about 111% more time than I had estimated.
+(59 /66) * 6060 = ~5417 -- so this would be a better number based on experiments.
+
+Sending/receiving serial commands would take CPU cycles, which would skew the results.
 ```
 Menu: {TPZ} {RGYA} <int>: ta1000
 Menu: {TPZ} {RGYA} <int>: za
@@ -66,10 +71,14 @@ G toggles: 66
 Y toggles: 66
 ```
 
+As shown above, 1HZ toggling displays a slower frequency for the green LED.
+
 Experiment 2
 ------------
 Use your software timer to toggle the red LED. Toggle all 3 at 1Hz. Simply observe the final toggle count. All should be about 60 (maybe the red is off by 1). If this is not the case, you probably set something up wrong, and you should fix it. 
 
+####Results
+The toggle results below show equal (or almost equal) toggle frequency for all LEDs.
 ```
 Menu: {TPZ} {RGYA} <int>: ta1000
 Menu: {TPZ} {RGYA} <int>: za
@@ -83,6 +92,12 @@ Experiment 3
 ------------
 Set all LEDs to toggle at 2Hz (500ms). Place a 90ms busy-wait for-loop into the ISR for the green LED. Toggle for 1 minute and record results. Now place a 90ms busy-wait for-loop into the ISR for the yellow LED. Toggle for 1 minute and record results. What did you observe? Did the busy-wait disrupt any of the LEDs? Explain your results. 
 
+####Results
+#####Green LED busy-wait
+Placing the busy-wait loop in the green LED reduced the red LED frequency by about 1/3. I am assuming that because the busy-wait is in the ISR for the green LED, interrupts are being disabled during that time, and the for the scheduler (which is triggred by an interrupt) is being blocked from releasing the red LED.
+
+The green LED is uneffected as it is running on hardware PWM.
+
 ```              
 Menu: {TPZ} {RGYA} <int>: ta500
 Menu: {TPZ} {RGYA} <int>: za
@@ -91,6 +106,11 @@ R toggles: 97
 G toggles: 120
 Y toggles: 120
 ```
+
+#####Yellow LED busy-wait
+This is the same effect as above, except more pronounced.
+
+The yellow LED is uneffected because the busy-wait does not effect the yellow LED ISR from happening -- it just introduces a delay within it. The yellow ISR should still trigger at the normal frequency.
 
 ```
 Menu: {TPZ} {RGYA} <int>: ta500
@@ -104,8 +124,17 @@ Y toggles: 120
  
 Experiment 4
 ------------
-Repeat #3, except use a 110ms busy-wait. You probably won’t be able to use the menu functions. If not, report that, and discuss what you observed from the blinking. Explain your results.
+Repeat #3, except use a 110ms busy-wait. You probably won't be able to use the menu functions. If not, report that, and discuss what you observed from the blinking. Explain your results.
 
+####Results
+#####Green LED busy-wait
+This is similar to the results in experiment 3, but slightly less toggles for the red LED. This seems to make sense.
+
+Comparing experiment 3 / experiment 4
+93 toggles is 96% of 97 toggles
+90 is 82% of 110ms
+
+I would have expected that increasing the ms delay by a certain percentage would have that same percentage impact on the number of toggles. It is **close**, but not quite what I expected. I was able to use the serial menu commands for this first part of this experiement.
 ```     
 Menu: {TPZ} {RGYA} <int>: ta500
 Menu: {TPZ} {RGYA} <int>: za
@@ -115,6 +144,8 @@ G toggles: 120
 Y toggles: 120
 ```
 
+#####Yellow LED busy-wait
+The serial menu commands were inoperable during this experiment. The red LED was almost completely disabled. Interestingly, this is the first time that introducing the busy-wait in the yellow LED had a noticable effect on the yellow LED frequency.
 ```
 R toggles ~1*
 G toggles ~120*
@@ -126,11 +157,17 @@ Experiment 5
 ------------
 Repeat #3, except use a 510ms busy-wait. Explain your results.
 
+####Results
+#####Green LED busy-wait
+The yellow and red LEDs are completely disabled, as well as the serial menu.
 ```
 R toggles 0*
 G toggles ~120*
 Y toggles 0*
 ```
+
+#####Yellow LED busy-wait
+The red LED is completely disabled, as well as the serial menu.
 
 ```
 R toggles 0*
@@ -143,12 +180,17 @@ Experiment 6
 ------------
 Repeat #5 (i.e. 2Hz toggle with 510ms busy-wait), except place an sei() at the top of the ISR with the for-loop in it. Explain your results.
 
+####Results
+#####Green LED busy-wait
+With the sei() in the green LED, it allows the yellow LED interrupt to happen (as a nested interrupt), so the yellow LED toggles are back to normal. The scheduler (and the red LED) seems to be disabled. 
 ```
 R toggles 0*
 G toggles ~120*
 Y toggles ~120*
 ```
 
+#####Yellow LED busy-wait
+With the busy-wait (and the sei()) in the yellow interrupt, neither the red or the yellow LEDs toggle. I think that the yellow LED ISR is interrupting itself, as the busy-wait time is longer than the ISR period. I assmume that it continues to interrupt itself and never reaches the actual toggle. The scheudler (and the red LED released by it) never has a chance then to release the red LED task.
 ```
 R toggles 0*
 G toggles ~120*
