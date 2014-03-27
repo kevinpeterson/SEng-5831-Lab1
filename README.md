@@ -1,6 +1,10 @@
 Timer Experiement Lab Notes
 =======================================
 
+WCET
+----
+To create a busy-wait loop that accurately reflected the amount of time, I disassembled the program code and looked for the method ```busy_wait_10ms```.
+
 ```
 000002f6 <busy_wait_10ms>:
      2f6:	a0 e0       	ldi	r26, 0x00	; 0
@@ -38,8 +42,13 @@ Timer Experiement Lab Notes
      354:	f8 f2       	brcs	.-66     	; 0x314 <busy_wait_10ms+0x1e>
      356:	e2 e0       	ldi	r30, 0x02	; 2
      358:	0c 94 76 11 	jmp	0x22ec	; 0x22ec <__epilogue_restores__+0x20>
+```
+I tried to identify the part of the machine instructions actually looped, as that would give the most accurate results. Between instructions 314 and 352 seems to be the actual for loop instructions.
 
 
+I next counted the instructions within this loop, and consulted the datasheet to find the number of machine instructions needed to execute these commands. I multipled them and added the result:
+
+```
 lds: 8 x 2 = 16
 adiw: 1 x 2 = 2
 adc: 2 x 1 = 2
@@ -49,9 +58,15 @@ ldi: 1 x 1 = 1
 cpc: 3 x 1 = 3
 ==================
                 33
-               
+```
+To find the number of loops needed for 10ms, I divided the CPU clock time by the machine instructions times the desired freqeuncy (100 Hz): 
+
+```
 20000000 / (33 * 100) = 6060
 ```
+
+Resulting in an estimated 6060 loops through the for loop.
+
 
 Experiment 1
 ------------
