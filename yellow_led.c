@@ -21,8 +21,8 @@
 
 volatile uint32_t yellow_toggles = 0;
 
-volatile uint16_t yellow_interrupt_counter = 1;
-volatile uint16_t yellow_interrupt = 1;
+volatile uint32_t yellow_interrupt_counter = 1;
+volatile uint32_t yellow_interrupt = 1;
 
 void init_yellow_led() {
 	TCCR3B = _BV(CS31) | _BV(CS30) | _BV(WGM32);
