@@ -2,13 +2,13 @@
  * Controller for the Yellow LED driven directly by a timer ISR.
  */
 #include <avr/interrupt.h>
-#include <util/delay.h>
 #include "led.h"
 #include "lab1.h"
 #include <pololu/orangutan.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "tasks.h"
 
 //--------------------------- YELLOW ---------------------------------//
 	// 100 ms Softward Clock using 8-bit timer.
@@ -35,13 +35,13 @@ ISR(TIMER3_COMPA_vect) {
 	sei();
 #endif
 #ifdef EXPERIMENT_3_2
-	delay_ms(90);
+	WAIT_10MS_TIMES(9);
 #endif
 #ifdef EXPERIMENT_4_2
-	delay_ms(110);
+	WAIT_10MS_TIMES(11);
 #endif
 #if defined(EXPERIMENT_5_2) || defined(EXPERIMENT_6_2)
-	delay_ms(510);
+	WAIT_10MS_TIMES(51);
 #endif
 	if(yellow_interrupt_counter == yellow_interrupt) {
 		LED_TOGGLE(YELLOW);

@@ -20,6 +20,10 @@ volatile uint32_t __ii;
 
 #define WAIT_10MS { for ( __ii=0; __ii < FOR_COUNT_10MS; __ii++ ); }
 
+volatile uint32_t __jj;
+
+#define WAIT_10MS_TIMES(TENS) { for ( __jj=0; __jj < TENS; __jj++ ) { WAIT_10MS; } }
+
 void initialize_tasks();
 
 void setPeriod(char task, int ms);
