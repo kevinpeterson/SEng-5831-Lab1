@@ -181,9 +181,11 @@ Repeat #3, except use a 110ms busy-wait. You probably won't be able to use the m
 #####Green LED busy-wait
 This is similar to the results in experiment 3, but slightly less toggles for the red LED. This seems to make sense.
 
-Comparing experiment 3 / experiment 4
+Comparing experiment 3 / experiment 4:
+
 93 toggles is 96% of 97 toggles
-90 is 82% of 110ms
+
+90ms is 82% of 110ms
 
 I would have expected that increasing the ms delay by a certain percentage would have that same percentage impact on the number of toggles. It is *close*, but not quite what I expected. I was able to use the serial menu commands for this first part of this experiement.
 ```     
