@@ -5,6 +5,21 @@ WCET
 ----
 To create a busy-wait loop that accurately reflected the amount of time, I disassembled the program code and looked for the method ```busy_wait_10ms```.
 
+The function in ```red_led.c```:
+```
+void busy_wait_10ms() {
+	WAIT_10MS;
+}
+```
+
+with ```WAIT_10MS``` defined in ```tasks.h```:
+```
+volatile uint32_t __ii;
+
+#define WAIT_10MS { for ( __ii=0; __ii < FOR_COUNT_10MS; __ii++ ); }
+```
+
+The results of the disassembly were as follows:
 ```
 000002f6 <busy_wait_10ms>:
      2f6:	a0 e0       	ldi	r26, 0x00	; 0
@@ -49,15 +64,15 @@ I tried to identify the part of the machine instructions actually looped, as tha
 I next counted the instructions within this loop, and consulted the datasheet to find the number of machine instructions needed to execute these commands. I multipled them and added the result:
 
 ```
-lds: 8 x 2 = 16
+lds:  8 x 2 = 16
 adiw: 1 x 2 = 2
-adc: 2 x 1 = 2
-sts: 4 x 2 = 8
-cpi: 1 x 1 = 1
-ldi: 1 x 1 = 1
-cpc: 3 x 1 = 3
-==================
-                33
+adc:  2 x 1 = 2
+sts:  4 x 2 = 8
+cpi:  1 x 1 = 1
+ldi:  1 x 1 = 1
+cpc:  3 x 1 = 3
+================
+              33
 ```
 To find the number of loops needed for 10ms, I divided the CPU clock time by the machine instructions times the desired freqeuncy (100 Hz): 
 
