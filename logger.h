@@ -4,6 +4,9 @@
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
+/**
+ * The current level of information to log.
+ */
 #define LOG_LEVEL INFO
 
 typedef enum {
@@ -13,8 +16,10 @@ typedef enum {
   ERROR = 3
 } LogLevel;
 
-#define LOG()
-
+/**
+ * Log the given message. Logging will procede if the LogLevel
+ * is equal to or greater than the current "LOG_LEVEL."
+ */
 void log_msg(char* msg, LogLevel level);
 
 #endif /* LOGGER_H_ */

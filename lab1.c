@@ -38,7 +38,9 @@ void init_io() {
 	DDRA |= _BV(2);
 }
 
-
+/**
+ * Test a LED by toggling it a few times.
+ */
 void _test_led(volatile uint8_t* port, char port_value){
 	int i = 0;
 	for(i = 0;i < 5;i++){
@@ -48,6 +50,10 @@ void _test_led(volatile uint8_t* port, char port_value){
 }
 
 #ifdef WELCOME_MSG
+/**
+ * A quite unnecessary welcome screen display.
+ * I wanted to learn some pointer math...
+ */
 void print_welcome_message() {
 	char* msg = "Kevin's Lab 1";
 	int8_t i = -strlen(msg);
@@ -70,6 +76,9 @@ void print_welcome_message() {
 }
 #endif
 
+/**
+ * A simple LED/LCD check to make sure things are working.
+ */
 void system_check() {
 	clear();
 	print("Checking Status...");
@@ -151,6 +160,8 @@ int main(void) {
 	// clear the LCD
 	clear();
 
+	// For these experiments, the serial menu doesn't work, so I'll
+	// set the necessary values here.
 #if defined(EXPERIMENT_4_1) || defined(EXPERIMENT_4_2) || \
 	defined(EXPERIMENT_5_1) || defined(EXPERIMENT_5_2) || \
 	defined(EXPERIMENT_6_1) || defined(EXPERIMENT_6_2)
@@ -167,6 +178,8 @@ int main(void) {
 	sei();
 #endif
 
+	// The Cyclic Executor. That sounds important... like something you'd
+	// have on a business card.
 	while (1) {
 
 #if defined(BUSY_WAIT_LOOP) || defined(EXPERIMENT_1)

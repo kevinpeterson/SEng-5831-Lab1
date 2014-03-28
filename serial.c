@@ -9,9 +9,15 @@
 void check_for_new_bytes_received();
 void _monitor_serial();
 
+/**
+ * The serial monitoring task to be scheduled.
+ */
 volatile Task monitor_serial_task = { .period = 5, .interrupt_function =
 		&_monitor_serial, .released = 0, .name = "Monitor Serial Task" };
 
+/**
+ * A linked-list of callback functions.
+ */
 typedef struct CallbackFn {
 	void (*callback)(char c);
 	struct CallbackFn* next;
