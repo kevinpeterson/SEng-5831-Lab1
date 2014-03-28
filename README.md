@@ -164,7 +164,7 @@ Comparing experiment 3 / experiment 4
 93 toggles is 96% of 97 toggles
 90 is 82% of 110ms
 
-I would have expected that increasing the ms delay by a certain percentage would have that same percentage impact on the number of toggles. It is **close**, but not quite what I expected. I was able to use the serial menu commands for this first part of this experiement.
+I would have expected that increasing the ms delay by a certain percentage would have that same percentage impact on the number of toggles. It is *close*, but not quite what I expected. I was able to use the serial menu commands for this first part of this experiement.
 ```     
 Menu: {TPZ} {RGYA} <int>: ta500
 Menu: {TPZ} {RGYA} <int>: za
@@ -189,7 +189,7 @@ Repeat #3, except use a 510ms busy-wait. Explain your results.
 
 ####Results
 #####Green LED busy-wait
-The yellow and red LEDs are completely disabled, as well as the serial menu.
+The yellow and red LEDs are completely disabled, as well as the serial menu. With a 510ms busy-wait, the all CPU time seems to be used in the ISR, and not allowing the red LED to be scheduled by the cyclic executor, or for the yellow ISR to fire.
 ```
 R toggles 0*
 G toggles ~120*
@@ -197,7 +197,9 @@ Y toggles 0*
 ```
 
 #####Yellow LED busy-wait
-The red LED is completely disabled, as well as the serial menu.
+The red LED is completely disabled, as well as the serial menu. Again, the cyclic executor does not have enough CPU cycles to schedule the red LED task. The yellow LED does eventually toggle, as the ISR is at least getting called (and then delayed within it).
+
+If there is a 510ms delay in the yellow LED ISR, that would mean that if nested interrupts aren't turned on, in one minute the ISR would run to completion at most (one minute / 510ms times), or around ~117 times. The observed toggles is significantly lower than that, so I assume that context swapping and other contention is the factor.
 
 ```
 R toggles 0*
