@@ -4,13 +4,21 @@ Timer Experiement Lab Notes
 Project Stucture
 ----------------
 The project is divided into these major modules:
+
 **lab1.c/h** - Where the cyclic executor is, and where the various experiment conditions are set.
+
 **led.h** - Helper functions for interacting with the LEDs.
+
 **logger.c/h** - Logging/debug functionality (printing to the LCD).
+
 **menu.c/h** - Parses and receieves serial communication commands.
+
 **serial.c/h** - Centrailized serial communication functionality.
+
 **tasks.c/h** - Interprets commands from the menu module and calls the necessary application logic.
+
 **scheduler.c/h** - A simple non-preemptive task scheduler.
+
 **(yellow)|(red)|(green)_led.c/h** - LED functionality to include counting toggles, setting toggle rate, etc.
 
 
