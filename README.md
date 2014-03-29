@@ -1,4 +1,4 @@
-Timer Experiement Lab Notes
+Timer Experiment Lab Notes
 =======================================
 
 Project Stucture
