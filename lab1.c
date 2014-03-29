@@ -178,7 +178,7 @@ int main(void) {
 	sei();
 #endif
 
-	// The Cyclic Executor. That sounds important... like something you'd
+	// The Cyclic Executive. That sounds important... like something you'd
 	// have on a business card.
 	while (1) {
 

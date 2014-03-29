@@ -5,7 +5,7 @@ Project Stucture
 ----------------
 The project is divided into these major modules:
 
-**lab1.c/h** - Where the cyclic executor is, and where the various experiment conditions are set.
+**lab1.c/h** - Where the cyclic executive is, and where the various experiment conditions are set.
 
 **led.h** - Helper functions for interacting with the LEDs.
 
@@ -210,7 +210,7 @@ Repeat #3, except use a 510ms busy-wait. Explain your results.
 
 ####Results
 #####Green LED busy-wait
-The yellow and red LEDs are completely disabled, as well as the serial menu. With a 510ms busy-wait, the all CPU time seems to be used in the ISR, and not allowing the red LED to be scheduled by the cyclic executor, or for the yellow ISR to fire.
+The yellow and red LEDs are completely disabled, as well as the serial menu. With a 510ms busy-wait, the all CPU time seems to be used in the ISR, and not allowing the red LED to be scheduled by the cyclic executive, or for the yellow ISR to fire.
 ```
 R toggles 0*
 G toggles ~120*
@@ -218,7 +218,7 @@ Y toggles 0*
 ```
 
 #####Yellow LED busy-wait
-The red LED is completely disabled, as well as the serial menu. Again, the cyclic executor does not have enough CPU cycles to schedule the red LED task. The yellow LED does eventually toggle, as the ISR is at least getting called (and then delayed within it).
+The red LED is completely disabled, as well as the serial menu. Again, the cyclic executive does not have enough CPU cycles to schedule the red LED task. The yellow LED does eventually toggle, as the ISR is at least getting called (and then delayed within it).
 
 If there is a 510ms delay in the yellow LED ISR, that would mean that if nested interrupts aren't turned on, in one minute the ISR would run to completion at most (one minute / 510ms) times, or around ~117 times. The observed toggles is significantly lower than that, so I assume that context swapping and other contention is the factor.
 
@@ -235,7 +235,7 @@ Repeat #5 (i.e. 2Hz toggle with 510ms busy-wait), except place an sei() at the t
 
 ####Results
 #####Green LED busy-wait
-With the sei() in the green LED, it allows the yellow LED interrupt to happen (as a nested interrupt), so the yellow LED toggles are back to normal. The scheduler (and the red LED) seems to be disabled. This is probably because with the busy wait and the allowance of nested interrupts, all CPU time is being used in interrupts an not allowing the cyclic executor (and the scheduler) to release the red LED task.
+With the sei() in the green LED, it allows the yellow LED interrupt to happen (as a nested interrupt), so the yellow LED toggles are back to normal. The scheduler (and the red LED) seems to be disabled. This is probably because with the busy wait and the allowance of nested interrupts, all CPU time is being used in interrupts an not allowing the cyclic executive (and the scheduler) to release the red LED task.
 ```
 R toggles 0*
 G toggles ~120*
