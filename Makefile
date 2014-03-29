@@ -11,7 +11,6 @@ CC=avr-gcc
 AS=avr-as
 OBJ2HEX=avr-objcopy
 LDFLAGS=-Wl,-gc-sections -lpololu_$(DEVICE) -Wl,-relax
-PANDOC=pandoc --from markdown --to html --standalone
 
 AVRDUDE=avrdude
 
@@ -22,9 +21,6 @@ all: $(TARGET).hex
 
 clean:
 	rm -f *.o *.hex *.obj *.hex
-
-docs: README.md
-	$(PANDOC) README.md > README.html
 
 %.hex: $(TARGET).obj
 	$(OBJ2HEX) -R .eeprom -O ihex $< $@
