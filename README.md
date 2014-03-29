@@ -145,7 +145,7 @@ Set all LEDs to toggle at 2Hz (500ms). Place a 90ms busy-wait for-loop into the 
 
 ####Results
 #####Green LED busy-wait
-Placing the busy-wait loop in the green LED reduced the red LED frequency by about 1/3. I am assuming that because the busy-wait is in the ISR for the green LED, interrupts are being disabled during that time, and the for the scheduler (which is triggred by an interrupt) is being blocked from releasing the red LED.
+Placing the busy-wait loop in the green LED reduced the red LED frequency by about 1/3. I am assuming that because the busy-wait is in the ISR for the green LED, interrupts are being disabled during that time, and the for the scheduler (which is triggred by an interrupt) is being blocked from releasing the red LED. Or, the CPU time being used in the ISR is slowing down the cyclic executive, which is releasing the red LED task.
 
 The green LED is uneffected as it is running on hardware PWM.
 
