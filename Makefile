@@ -39,4 +39,4 @@ program: $(TARGET).hex
 
 .PHONY: release
 release:
-	tar -czvf SEng5831-Lab1-`date +%m_%d_%y`.tar.gz Makefile *.md *.c *.h
+	tar -fczv SEng5831-Lab1-`date +%m_%d_%y`.tar.gz Makefile *.c *.h *.md 
