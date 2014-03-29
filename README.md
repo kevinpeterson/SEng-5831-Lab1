@@ -145,7 +145,7 @@ Set all LEDs to toggle at 2Hz (500ms). Place a 90ms busy-wait for-loop into the 
 
 ####Results
 #####Green LED busy-wait
-Placing the busy-wait loop in the green LED reduced the red LED frequency by about 1/3. I am assuming that because the busy-wait is in the ISR for the green LED, interrupts are being disabled during that time, and the for the scheduler (which is triggred by an interrupt) is being blocked from releasing the red LED. Or, the CPU time being used in the ISR is slowing down the cyclic executive, which is releasing the red LED task.
+Placing the busy-wait loop in the green LED reduced the red LED frequency by about 1/3. I am assuming that because the busy-wait is in the ISR for the green LED, interrupts are being disabled during that time, and therefor the scheduler (which is triggred by an interrupt) is being blocked from releasing the red LED. That, or the CPU time being used in the ISR is slowing down the cyclic executive, which is releasing the red LED task.
 
 The green LED is uneffected as it is running on hardware PWM.
 
@@ -222,7 +222,7 @@ Y toggles 0*
 #####Yellow LED busy-wait
 The red LED is completely disabled, as well as the serial menu. Again, the cyclic executive does not have enough CPU cycles to schedule the red LED task. The yellow LED does eventually toggle, as the ISR is at least getting called (and then delayed within it).
 
-If there is a 510ms delay in the yellow LED ISR, that would mean that if nested interrupts aren't turned on, in one minute the ISR would run to completion at most (one minute / 510ms) times, or around ~117 times. The observed toggles is significantly lower than that, so I assume that context swapping and other contention is the factor.
+If there is a 510ms delay in the yellow LED ISR, that would mean that if nested interrupts aren't turned on, in one minute the ISR would run to completion at most (one minute / 510ms) times, or around ~117 times. The observed toggles are significantly lower than that, so I assume that context swapping and other contention is the factor.
 
 ```
 R toggles 0*
